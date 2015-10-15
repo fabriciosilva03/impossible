@@ -9,11 +9,15 @@ import android.view.SurfaceView;
 
 public class Impossible extends SurfaceView implements Runnable {
 	
+	//Atributos
 	boolean running = false;
 	Thread renderThread = null;
 	
 	SurfaceHolder holder;
 	Paint paint;
+	
+	private int playerY = 300;
+	
 	
 	public Impossible(Context context){
 		super(context);
@@ -22,6 +26,7 @@ public class Impossible extends SurfaceView implements Runnable {
 		holder = getHolder();
 	}
 
+	//Executando o game
 	@Override
 	public void run() {
 		while(running){
@@ -29,8 +34,9 @@ public class Impossible extends SurfaceView implements Runnable {
 			if(!holder.getSurface().isValid())
 				continue;	
 			
-				//Bloquei Canvas
+				//Bloquei o canvas e prepara a tela
 				Canvas canvas = holder.lockCanvas();
+				canvas.drawColor(Color.BLACK);
 				
 				//desenha o player
 				drawPlayer(canvas);
@@ -49,16 +55,19 @@ public class Impossible extends SurfaceView implements Runnable {
 	//Desenhado o player
 	private void drawPlayer(Canvas canvas){
 		paint.setColor(Color.GREEN);
-		canvas.drawCircle(100, 100, 100, paint);
+		canvas.drawCircle(100, playerY, 50, paint);
 	}
 	
-	
+	//Pause do jogo
 	public void resume(){
 		running = true;
 		renderThread = new Thread(this);
 		renderThread.start();
 	}
 	
-	
+	//Mover o player para baixo
+	public void moveDown(int pixels){
+		playerY += pixels;
+	}
 
 }

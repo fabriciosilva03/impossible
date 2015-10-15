@@ -2,8 +2,11 @@ package br.com.example.imposible;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
 
-public class Game extends Activity{
+public class Game extends Activity implements OnTouchListener{
 	
 	Impossible view;
 	
@@ -13,6 +16,9 @@ public class Game extends Activity{
 	
 		//Logica do Jogo
 		view = new Impossible(this);
+		
+		//Recebendo os onTouch
+		view.setOnTouchListener(this);
 		
 		//Configurar View
 		setContentView(view);
@@ -24,6 +30,11 @@ public class Game extends Activity{
 		view.resume();
 	}
 	
+	@Override
+	public boolean onTouch(View v, MotionEvent event){
+		view.moveDown(10);
+		return true;
+	}
 	
 
 }
