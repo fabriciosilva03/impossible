@@ -1,6 +1,7 @@
 package br.com.example.imposible;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -45,7 +46,8 @@ public class Impossible extends SurfaceView implements Runnable {
 			
 				//Bloquei o canvas e prepara a tela
 				Canvas canvas = holder.lockCanvas();
-				canvas.drawColor(Color.BLACK);
+				//canvas.drawColor(Color.BLACK);
+				canvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.sky), 0, 0, null);
 				
 				//desenha o player
 				drawPlayer(canvas);
@@ -77,7 +79,8 @@ public class Impossible extends SurfaceView implements Runnable {
 	//Desenhado o player
 	private void drawPlayer(Canvas canvas){
 		paint.setColor(Color.GREEN);
-		canvas.drawCircle(playerX, playerY, 30, paint);
+		canvas.drawBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.nave), playerX-50, playerY-50, null);
+		//canvas.drawCircle(playerX, playerY, 30, paint);
 	}
 	
 	//Pause do jogo
@@ -94,7 +97,7 @@ public class Impossible extends SurfaceView implements Runnable {
 	
 	//Criando o inimigo
 	private void drawEnemy(Canvas canvas){
-		paint.setColor(Color.GRAY);
+		paint.setColor(Color.RED);
 		enemyRadius++;
 		canvas.drawCircle(enemyX, enemyY, enemyRadius, paint);
 	}
