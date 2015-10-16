@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -16,7 +17,7 @@ public class Impossible extends SurfaceView implements Runnable {
 	SurfaceHolder holder;
 	Paint paint;
 	
-	private int playerX=300, playerY = 300, playerRadius=50;
+	private int playerX=200, playerY = 300, playerRadius=50;
 	
 	private int enemyX, enemyY, enemyRadius = 50;
 	
@@ -24,6 +25,7 @@ public class Impossible extends SurfaceView implements Runnable {
 	
 	private boolean gameover;
 	
+	private int score;
 	
 	
 	public Impossible(Context context){
@@ -53,10 +55,13 @@ public class Impossible extends SurfaceView implements Runnable {
 				
 				//detecta colisao
 				checkCollision(canvas);
-				
+								
 				if(gameover){
-					break;
+					stopGame(canvas);
 				}
+				
+				//Atualiza o placar
+				drawScore(canvas);
 				
 				//Atualiza e libera o canvas
 				holder.unlockCanvasAndPost(canvas);
@@ -69,7 +74,7 @@ public class Impossible extends SurfaceView implements Runnable {
 	//Desenhado o player
 	private void drawPlayer(Canvas canvas){
 		paint.setColor(Color.GREEN);
-		canvas.drawCircle(playerX, playerY, 50, paint);
+		canvas.drawCircle(playerX, playerY, 30, paint);
 	}
 	
 	//Pause do jogo
@@ -103,5 +108,25 @@ public class Impossible extends SurfaceView implements Runnable {
 			gameover = true;
 		}
 	}
+	
+	//Mensagem de GAME OVER
+	private void stopGame(Canvas canvas){
+		paint.setStyle(Style.FILL);
+		paint.setColor(Color.WHITE);
+		paint.setTextSize(50);
+		canvas.drawText("GAME OVER!", 20, 100, paint);
+	}
 
+	//Pontuacao do jogo
+	public void addScore(int points){
+		score += points;
+	}
+	
+	//Pontuacao na tela
+	private void drawScore(Canvas canvas){
+		paint.setStyle(Style.FILL);
+		paint.setColor(Color.WHITE);
+		paint.setTextSize(40);
+		canvas.drawText(String.valueOf(score),50, 200, paint);
+	}
 }
