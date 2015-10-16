@@ -16,9 +16,14 @@ public class Impossible extends SurfaceView implements Runnable {
 	SurfaceHolder holder;
 	Paint paint;
 	
-	private int playerY = 300;
+	private int playerX=300, playerY = 300, playerRadius=50;
 	
-	private float enemyRadius;
+	private int enemyX, enemyY, enemyRadius = 50;
+	
+	private double distance;
+	
+	private boolean gameover;
+	
 	
 	
 	public Impossible(Context context){
@@ -46,14 +51,16 @@ public class Impossible extends SurfaceView implements Runnable {
 				//Inicia a criacao do inimigo
 				drawEnemy(canvas);
 				
-				//O que fazer aqui
+				//detecta colisao
+				checkCollision(canvas);
+				
+				if(gameover){
+					break;
+				}
 				
 				//Atualiza e libera o canvas
 				holder.unlockCanvasAndPost(canvas);
-				
-				
-		
-			
+							
 			System.out.println("Impossible Running!!!");
 		}
 		
@@ -62,7 +69,7 @@ public class Impossible extends SurfaceView implements Runnable {
 	//Desenhado o player
 	private void drawPlayer(Canvas canvas){
 		paint.setColor(Color.GREEN);
-		canvas.drawCircle(100, playerY, 50, paint);
+		canvas.drawCircle(playerX, playerY, 50, paint);
 	}
 	
 	//Pause do jogo
@@ -81,8 +88,20 @@ public class Impossible extends SurfaceView implements Runnable {
 	private void drawEnemy(Canvas canvas){
 		paint.setColor(Color.GRAY);
 		enemyRadius++;
-		canvas.drawCircle(100, 100, enemyRadius, paint);
+		canvas.drawCircle(enemyX, enemyY, enemyRadius, paint);
 	}
 	
+	//Metodo Colisão
+	private void checkCollision(Canvas canvas){
+		//Calcula a hipotenusa
+		distance = Math.pow(playerY - enemyY, 2)
+				+ Math.pow(playerX - enemyX, 2);
+		distance = Math.sqrt(distance);
+		
+		//Verifica a distancia entre os raios
+		if(distance  <= playerRadius + enemyRadius){
+			gameover = true;
+		}
+	}
 
 }
