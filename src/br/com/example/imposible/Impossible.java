@@ -63,6 +63,9 @@ public class Impossible extends SurfaceView implements Runnable {
 				//Atualiza o placar
 				drawScore(canvas);
 				
+				//Botoes Restart e Exit
+				drawButtons(canvas);
+				
 				//Atualiza e libera o canvas
 				holder.unlockCanvasAndPost(canvas);
 							
@@ -129,4 +132,29 @@ public class Impossible extends SurfaceView implements Runnable {
 		paint.setTextSize(40);
 		canvas.drawText(String.valueOf(score),50, 200, paint);
 	}
+	
+	//Criando Botoes Restart e Exit
+	private void drawButtons(Canvas canvas){
+		//Restart
+		paint.setStyle(Style.FILL);
+		paint.setColor(Color.WHITE);
+		paint.setTextSize(30);
+		canvas.drawText("Restart", 50, 300, paint);
+		
+		//Exit
+		paint.setStyle(Style.FILL);
+		paint.setColor(Color.WHITE);
+		paint.setTextSize(30);
+		canvas.drawText("Exit", 50, 500, paint);
+		
+	}
+	
+	//Reiniciando o jogo
+	public void init(){
+		enemyX = enemyY = enemyRadius = 0;
+		playerX = playerY = 300;
+		playerRadius = 50;
+		gameover = false;
+	}
+		
 }
